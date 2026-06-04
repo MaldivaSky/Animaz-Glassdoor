@@ -322,12 +322,12 @@ ul, ol { list-style: none; }
 
 /* Hero Carousel */
 .hero-carousel-wrapper {
-    flex: 1;
+    flex: 1.5;
     position: relative;
     border-radius: var(--radius-2xl);
     overflow: hidden;
-    aspect-ratio: 1170 / 360;
-    max-width: 560px;
+    aspect-ratio: 1170 / 270;
+    max-width: 840px;
     border: 1px solid var(--border-glass);
     box-shadow: var(--shadow-glass), 0 20px 50px rgba(0,0,0,0.4);
     background: var(--bg-glass);
