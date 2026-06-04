@@ -119,7 +119,8 @@ window.exportToPDF = function() {
         
         doc.text("Agradecemos a preferência!", 14, finalY + 30);
         doc.text("WhatsApp: +55 (92) 98187-0014", 14, finalY + 36);
-        doc.text("Unidade Parque 10: 08h às 22h | Unidade Compensa: 08h às 20h", 14, finalY + 42);
+        doc.text("Parque 10: 08h às 22h (Av. Maneca Marques, 1902) | Compensa: 08h às 20h (Av. Brasil, 1713)", 14, finalY + 42);
+        doc.text("Ponta Negra: 08h às 22h (Av. Coronel Teixeira, 6525)", 14, finalY + 48);
         
         // Save
         const filename = `Pedido_Animaz_${orderNum}.pdf`;

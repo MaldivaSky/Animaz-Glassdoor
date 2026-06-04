@@ -35,8 +35,9 @@ window.animazData = {
     "whatsapp": "5592981870014",
     "phone": "+55 (92) 98187-0014",
     "units": [
-      { "name": "Unidade Parque 10", "hours": "08h às 22h" },
-      { "name": "Unidade Compensa", "hours": "08h às 20h" }
+      { "name": "Unidade Parque 10", "hours": "08h às 22h", "address": "Av. Maneca Marques, 1902" },
+      { "name": "Unidade Compensa", "hours": "08h às 20h", "address": "Av. Brasil, 1713" },
+      { "name": "Unidade Ponta Negra", "hours": "08h às 22h", "address": "Av. Coronel Teixeira, 6525" }
     ],
     "schedule": "Funcionamos de domingo a domingo"
   },
