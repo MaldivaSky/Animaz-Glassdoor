@@ -89,7 +89,26 @@ function renderProducts(productsToRender) {
     emptyState.classList.add('hidden');
     
     productsToRender.forEach((product, index) => {
-        const priceDisplay = formatPriceHTML(product.price);
+        // Determine initial price based on sizesPricing and pre-selected size
+        let initialPrice = product.price;
+        let isPriceFrom = false;
+        
+        if (product.sizesPricing && product.sizes && product.sizes.length > 0) {
+            const firstSize = product.sizes[0];
+            if (product.sizesPricing[firstSize]) {
+                initialPrice = product.sizesPricing[firstSize];
+            }
+            const prices = Object.values(product.sizesPricing);
+            const hasVariation = prices.some(p => p !== prices[0]);
+            if (hasVariation) {
+                isPriceFrom = true;
+            }
+        }
+        
+        let priceDisplay = formatPriceHTML(initialPrice);
+        if (isPriceFrom) {
+            priceDisplay = `<span class="price-from" style="font-size: 13px; font-weight: 500; color: #888; display: block; margin-bottom: 2px;">A partir de</span> ${priceDisplay}`;
+        }
         
         // Sizes
         let sizesHTML = '';
@@ -97,6 +116,40 @@ function renderProducts(productsToRender) {
             sizesHTML = product.sizes.map((size, i) => 
                 `<span class="size-pill ${i===0 ? 'selected' : ''}" onclick="selectSize(this, ${product.id}, '${size}')">${size}</span>`
             ).join('');
+        }
+        
+        // Gallery carousel images
+        const gallery = product.gallery && product.gallery.length > 0 ? product.gallery : [product.image];
+        const hasMultipleImages = gallery.length > 1;
+        
+        let carouselHTML = '';
+        gallery.forEach((imgSrc, imgIdx) => {
+            carouselHTML += `<img src="${imgSrc}" alt="${product.name} - Foto ${imgIdx + 1}" loading="lazy" class="card-slide ${imgIdx === 0 ? 'active' : ''}" data-slide-index="${imgIdx}">`;
+        });
+        
+        // Dots for carousel
+        let dotsHTML = '';
+        if (hasMultipleImages) {
+            dotsHTML = '<div class="card-carousel-dots">';
+            gallery.forEach((_, dotIdx) => {
+                dotsHTML += `<span class="card-dot ${dotIdx === 0 ? 'active' : ''}" data-dot="${dotIdx}"></span>`;
+            });
+            dotsHTML += '</div>';
+        }
+        
+        // Navigation arrows
+        let arrowsHTML = '';
+        if (hasMultipleImages) {
+            arrowsHTML = `
+                <button class="card-carousel-arrow card-arrow-prev" aria-label="Foto anterior">‹</button>
+                <button class="card-carousel-arrow card-arrow-next" aria-label="Próxima foto">›</button>
+            `;
+        }
+        
+        // Image counter badge
+        let counterHTML = '';
+        if (hasMultipleImages) {
+            counterHTML = `<span class="card-img-counter">1/${gallery.length}</span>`;
         }
         
         const card = document.createElement('div');
@@ -108,9 +161,12 @@ function renderProducts(productsToRender) {
         card.style.animationDelay = `${index * 0.05}s`;
         
         card.innerHTML = `
-            <div class="product-image-wrapper" onclick="openLightbox(${product.id})">
-                <img src="${product.image}" alt="${product.name}" loading="lazy">
+            <div class="product-image-wrapper" data-product-id="${product.id}" data-total="${gallery.length}">
+                ${carouselHTML}
                 ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                ${arrowsHTML}
+                ${dotsHTML}
+                ${counterHTML}
             </div>
             <div class="product-info">
                 <span class="product-brand">${highlightText(product.brand)}</span>
@@ -139,9 +195,71 @@ function renderProducts(productsToRender) {
         `;
         
         grid.appendChild(card);
+        
+        // Setup carousel interactions for this card
+        if (hasMultipleImages) {
+            setupCardCarousel(card, product.id);
+        }
     });
     
     setupIntersectionObserver();
+}
+
+// ==========================================
+// Card Image Carousel Logic
+// ==========================================
+function setupCardCarousel(card, productId) {
+    const wrapper = card.querySelector('.product-image-wrapper');
+    const slides = wrapper.querySelectorAll('.card-slide');
+    const dots = wrapper.querySelectorAll('.card-dot');
+    const counter = wrapper.querySelector('.card-img-counter');
+    const prevBtn = wrapper.querySelector('.card-arrow-prev');
+    const nextBtn = wrapper.querySelector('.card-arrow-next');
+    const total = slides.length;
+    let current = 0;
+    
+    function goToSlide(idx) {
+        if (idx < 0) idx = total - 1;
+        if (idx >= total) idx = 0;
+        
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        
+        slides[idx].classList.add('active');
+        if (dots[idx]) dots[idx].classList.add('active');
+        if (counter) counter.textContent = `${idx + 1}/${total}`;
+        
+        current = idx;
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToSlide(current - 1);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToSlide(current + 1);
+        });
+    }
+    
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goToSlide(parseInt(dot.dataset.dot));
+        });
+    });
+    
+    // Click on image opens lightbox
+    slides.forEach(slide => {
+        slide.addEventListener('click', () => {
+            openLightbox(productId);
+        });
+        slide.style.cursor = 'zoom-in';
+    });
 }
 
 // Helper: Formata Preço HTML
@@ -167,8 +285,19 @@ function selectSize(element, productId, size) {
     container.querySelectorAll('.size-pill').forEach(pill => pill.classList.remove('selected'));
     element.classList.add('selected');
     
-    // Store selected size temporarily (optional, cart.js handles it usually)
-    element.dataset.selectedSize = size;
+    // Update price display if sizesPricing exists
+    const product = window.animazState.products.find(p => p.id === productId);
+    if (product) {
+        const info = container.closest('.product-info');
+        const priceContainer = info ? info.querySelector('.product-price') : null;
+        if (priceContainer && product.price > 0) {
+            let selectedPrice = product.price;
+            if (product.sizesPricing && product.sizesPricing[size]) {
+                selectedPrice = product.sizesPricing[size];
+            }
+            priceContainer.innerHTML = formatPriceHTML(selectedPrice);
+        }
+    }
 }
 
 // Helper: Alterar Qtd no card

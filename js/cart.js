@@ -33,12 +33,17 @@ function saveCart() {
     renderCart();
 }
 
-// Expõe globalmente para app.js
 window.cartAddToCart = function(product, qty, size) {
     // Check if same item + size already in cart
     const existingIndex = window.animazCart.findIndex(item => 
         item.id === product.id && item.size === size
     );
+    
+    // Resolve correct price based on size if sizesPricing exists
+    let price = product.price;
+    if (product.sizesPricing && size && product.sizesPricing[size]) {
+        price = product.sizesPricing[size];
+    }
     
     if (existingIndex > -1) {
         window.animazCart[existingIndex].qty += qty;
@@ -46,7 +51,7 @@ window.cartAddToCart = function(product, qty, size) {
         window.animazCart.push({
             id: product.id,
             name: product.name,
-            price: product.price, // can be 0
+            price: price,
             image: product.image,
             qty: qty,
             size: size
