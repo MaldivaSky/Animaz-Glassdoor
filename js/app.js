@@ -1,0 +1,421 @@
+/**
+ * app.js
+ * Lógica principal da aplicação (Renderização, Filtros, Busca, Modal)
+ */
+
+// Estado Global
+window.animazState = {
+    storeInfo: null,
+    categories: [],
+    products: [],
+    filteredProducts: [],
+    currentCategory: 'todos',
+    searchQuery: '',
+    sortCriteria: 'default'
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    setupHeroCarousel();
+    setupSearch();
+});
+
+// ==========================================
+// 1. Carregamento de Dados
+// ==========================================
+async function loadProducts() {
+    try {
+        const data = window.animazData;
+        if (!data) throw new Error('Dados não carregados do products.js');
+        
+        window.animazState.storeInfo = data.store;
+        window.animazState.categories = data.categories;
+        window.animazState.products = data.products;
+        window.animazState.filteredProducts = [...data.products];
+        
+        renderCategories();
+        renderProducts(window.animazState.filteredProducts);
+        
+        // Remove loading state
+        const loadingState = document.getElementById('loading-state');
+        if(loadingState) loadingState.classList.add('hidden');
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        document.getElementById('loading-state').innerHTML = `<p>Erro ao carregar o catálogo. Tente novamente.</p>`;
+    }
+}
+
+// ==========================================
+// 2. Renderização de Categorias
+// ==========================================
+function renderCategories() {
+    const container = document.getElementById('categories');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    window.animazState.categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = `category-pill ${cat.id === window.animazState.currentCategory ? 'active' : ''}`;
+        btn.dataset.id = cat.id;
+        btn.innerHTML = `<span>${cat.icon}</span> ${cat.name}`;
+        
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            filterByCategory(cat.id);
+        });
+        
+        container.appendChild(btn);
+    });
+}
+
+// ==========================================
+// 3. Renderização de Produtos
+// ==========================================
+function renderProducts(productsToRender) {
+    const grid = document.getElementById('products-grid');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    if (productsToRender.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+    }
+    
+    emptyState.classList.add('hidden');
+    
+    productsToRender.forEach((product, index) => {
+        const priceDisplay = formatPriceHTML(product.price);
+        
+        // Sizes
+        let sizesHTML = '';
+        if (product.sizes && product.sizes.length > 0) {
+            sizesHTML = product.sizes.map((size, i) => 
+                `<span class="size-pill ${i===0 ? 'selected' : ''}" onclick="selectSize(this, ${product.id}, '${size}')">${size}</span>`
+            ).join('');
+        }
+        
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.dataset.id = product.id;
+        card.dataset.category = product.category;
+        
+        // Stagger animation delay
+        card.style.animationDelay = `${index * 0.05}s`;
+        
+        card.innerHTML = `
+            <div class="product-image-wrapper" onclick="openLightbox(${product.id})">
+                <img src="${product.image}" alt="${product.name}" loading="lazy">
+                ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+            </div>
+            <div class="product-info">
+                <span class="product-brand">${highlightText(product.brand)}</span>
+                <h3 class="product-name">${highlightText(product.name)}</h3>
+                <p class="product-description">${highlightText(product.description)}</p>
+                
+                <div class="product-sizes" id="sizes-${product.id}">
+                    ${sizesHTML}
+                </div>
+                
+                <div class="product-price ${product.price === 0 ? 'consulte' : ''}">
+                    ${priceDisplay}
+                </div>
+                
+                <div class="product-actions">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeCardQty(${product.id}, -1)">−</button>
+                        <span class="qty-value" id="qty-${product.id}">1</span>
+                        <button class="qty-btn" onclick="changeCardQty(${product.id}, 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" id="btn-add-${product.id}" onclick="addFromCard(${product.id})">
+                        🛒 Adicionar
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        grid.appendChild(card);
+    });
+    
+    setupIntersectionObserver();
+}
+
+// Helper: Formata Preço HTML
+function formatPriceHTML(price) {
+    if (!price || price <= 0) return 'Consulte';
+    return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+// Helper: Destaca texto pesquisado
+function highlightText(text) {
+    const query = window.animazState.searchQuery.trim();
+    if (!query) return text;
+    
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+}
+
+// Helper: Selecionar tamanho no card
+function selectSize(element, productId, size) {
+    const container = document.getElementById(`sizes-${productId}`);
+    if(!container) return;
+    
+    container.querySelectorAll('.size-pill').forEach(pill => pill.classList.remove('selected'));
+    element.classList.add('selected');
+    
+    // Store selected size temporarily (optional, cart.js handles it usually)
+    element.dataset.selectedSize = size;
+}
+
+// Helper: Alterar Qtd no card
+function changeCardQty(productId, delta) {
+    const span = document.getElementById(`qty-${productId}`);
+    let current = parseInt(span.innerText);
+    let newVal = current + delta;
+    if (newVal < 1) newVal = 1;
+    span.innerText = newVal;
+}
+
+// Helper: Adicionar a partir do card (chama func do cart.js se existir)
+function addFromCard(productId) {
+    const qtySpan = document.getElementById(`qty-${productId}`);
+    const qty = parseInt(qtySpan.innerText);
+    
+    // Find selected size
+    let size = '';
+    const sizesContainer = document.getElementById(`sizes-${productId}`);
+    if (sizesContainer) {
+        const selectedPill = sizesContainer.querySelector('.size-pill.selected');
+        if (selectedPill) size = selectedPill.innerText;
+    }
+    
+    const product = window.animazState.products.find(p => p.id === productId);
+    
+    if (typeof window.cartAddToCart === 'function' && product) {
+        window.cartAddToCart(product, qty, size);
+        
+        // Feedback visual
+        const btn = document.getElementById(`btn-add-${productId}`);
+        const originalText = btn.innerHTML;
+        btn.classList.add('added');
+        btn.innerHTML = '✅ Adicionado!';
+        
+        setTimeout(() => {
+            btn.classList.remove('added');
+            btn.innerHTML = originalText;
+            qtySpan.innerText = 1; // reset qty
+        }, 2000);
+    }
+}
+
+// ==========================================
+// 4. Filtros e Ordenação
+// ==========================================
+function filterByCategory(categoryId) {
+    window.animazState.currentCategory = categoryId;
+    applyFilters();
+}
+
+function setupSearch() {
+    const input = document.getElementById('search-input');
+    const clearBtn = document.getElementById('search-clear');
+    let timeout;
+    
+    if (!input) return;
+    
+    input.addEventListener('input', (e) => {
+        clearTimeout(timeout);
+        const val = e.target.value;
+        
+        if (val.length > 0) {
+            clearBtn.classList.remove('hidden');
+        } else {
+            clearBtn.classList.add('hidden');
+        }
+        
+        timeout = setTimeout(() => {
+            window.animazState.searchQuery = val.toLowerCase();
+            applyFilters();
+        }, 300); // Debounce
+    });
+    
+    if(clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+            clearBtn.classList.add('hidden');
+            window.animazState.searchQuery = '';
+            applyFilters();
+            input.focus();
+        });
+    }
+}
+
+window.sortProducts = function(criteria) {
+    window.animazState.sortCriteria = criteria;
+    applyFilters();
+}
+
+function applyFilters() {
+    let result = [...window.animazState.products];
+    const query = window.animazState.searchQuery;
+    const cat = window.animazState.currentCategory;
+    const sort = window.animazState.sortCriteria;
+    
+    // 1. Filtrar por Categoria
+    if (cat !== 'todos') {
+        result = result.filter(p => p.category === cat);
+    }
+    
+    // 2. Filtrar por Busca
+    if (query) {
+        result = result.filter(p => 
+            p.name.toLowerCase().includes(query) || 
+            p.brand.toLowerCase().includes(query) ||
+            p.description.toLowerCase().includes(query)
+        );
+    }
+    
+    // 3. Ordenação
+    if (sort === 'name-asc') {
+        result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sort === 'name-desc') {
+        result.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sort === 'price-asc') {
+        result.sort((a, b) => a.price - b.price);
+    } else if (sort === 'price-desc') {
+        result.sort((a, b) => b.price - a.price);
+    }
+    
+    window.animazState.filteredProducts = result;
+    renderProducts(result);
+}
+
+// ==========================================
+// 5. Hero Banner Carousel
+// ==========================================
+function setupHeroCarousel() {
+    const slides = document.querySelectorAll('.banner-slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    
+    if (slides.length === 0) return;
+    
+    function showSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        
+        slides[index].classList.add('active');
+        if(dots[index]) dots[index].classList.add('active');
+        currentSlide = index;
+    }
+    
+    // Auto rotate
+    setInterval(() => {
+        let next = currentSlide + 1;
+        if (next >= slides.length) next = 0;
+        showSlide(next);
+    }, 5000);
+    
+    // Click dots
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            showSlide(parseInt(dot.dataset.index));
+        });
+    });
+}
+
+// ==========================================
+// 6. Intersection Observer (Animação Scroll)
+// ==========================================
+function setupIntersectionObserver() {
+    const cards = document.querySelectorAll('.product-card');
+    
+    if (!('IntersectionObserver' in window)) {
+        cards.forEach(c => c.classList.add('animate-in'));
+        return;
+    }
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    cards.forEach(card => observer.observe(card));
+}
+
+// ==========================================
+// 7. Lightbox / Modal de Galeria
+// ==========================================
+let currentLightboxImages = [];
+let currentLightboxIndex = 0;
+
+window.openLightbox = function(productId) {
+    const product = window.animazState.products.find(p => p.id === productId);
+    if (!product) return;
+    
+    currentLightboxImages = product.gallery && product.gallery.length > 0 ? product.gallery : [product.image];
+    currentLightboxIndex = 0;
+    
+    const lightbox = document.getElementById('lightbox');
+    
+    updateLightboxView();
+    
+    // Render thumbnails if more than 1
+    const thumbsContainer = document.getElementById('lightbox-thumbnails');
+    thumbsContainer.innerHTML = '';
+    if (currentLightboxImages.length > 1) {
+        currentLightboxImages.forEach((imgSrc, idx) => {
+            const thumb = document.createElement('img');
+            thumb.src = imgSrc;
+            thumb.className = `lightbox-thumb ${idx === 0 ? 'active' : ''}`;
+            thumb.onclick = () => {
+                currentLightboxIndex = idx;
+                updateLightboxView();
+            };
+            thumbsContainer.appendChild(thumb);
+        });
+    }
+    
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevents scrolling
+}
+
+window.closeLightbox = function() {
+    const lightbox = document.getElementById('lightbox');
+    if(lightbox) lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+window.navigateLightbox = function(direction) {
+    currentLightboxIndex += direction;
+    if (currentLightboxIndex < 0) {
+        currentLightboxIndex = currentLightboxImages.length - 1;
+    } else if (currentLightboxIndex >= currentLightboxImages.length) {
+        currentLightboxIndex = 0;
+    }
+    updateLightboxView();
+}
+
+function updateLightboxView() {
+    if(currentLightboxImages.length === 0) return;
+    
+    const imgElement = document.getElementById('lightbox-image');
+    if(imgElement) {
+        imgElement.src = currentLightboxImages[currentLightboxIndex];
+    }
+    
+    // Update active thumb
+    const thumbs = document.querySelectorAll('.lightbox-thumb');
+    thumbs.forEach((t, idx) => {
+        if(idx === currentLightboxIndex) t.classList.add('active');
+        else t.classList.remove('active');
+    });
+}
