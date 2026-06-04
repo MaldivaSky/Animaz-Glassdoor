@@ -208,38 +208,131 @@ window.exportToExcel = function() {
 }
 
 // ==========================================
-// 3. Send via WhatsApp
+// 3. Send via WhatsApp & Checkout Modal Logic
 // ==========================================
 window.sendToWhatsApp = function() {
     if (!window.animazCart || window.animazCart.length === 0) {
         alert('O carrinho está vazio.');
         return;
     }
+    window.openCheckoutModal();
+}
 
-    const phone = "5592981870014"; // Number from store info
+window.openCheckoutModal = function() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevents scrolling
+    }
+}
+
+window.closeCheckoutModal = function() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restores scrolling
+    }
+}
+
+window.handleCheckoutModalClick = function(event) {
+    const card = document.querySelector('.checkout-modal-card');
+    if (card && !card.contains(event.target)) {
+        window.closeCheckoutModal();
+    }
+}
+
+window.maskCPF = function(input) {
+    let value = input.value.replace(/\D/g, "");
+    if (value.length > 11) value = value.slice(0, 11);
+    
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    
+    input.value = value;
+}
+
+window.submitCheckout = function(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('checkout-name').value.trim();
+    const cpf = document.getElementById('checkout-cpf').value.trim();
+    const address = document.getElementById('checkout-address').value.trim();
+    
+    if (!name || !cpf || !address) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+    
+    const phone = "5592981870014"; // Store phone
+    const orderNum = getOrderNumber();
+    const dateStr = getOrderDateString();
+    
+    // Build detailed structured message for ERP separation/invoicing
     let message = `*ANIMAZ PET SHOP* 🐾\n`;
-    message += `Novo pedido de orçamento/compra\n`;
-    message += `Data: ${getOrderDateString()}\n\n`;
-    message += `*Itens do Pedido:*\n`;
+    message += `*PEDIDO DE COMPRA / FATURAMENTO*\n\n`;
+    
+    message += `*👤 DADOS DO CLIENTE:*\n`;
+    message += `• *Nome:* ${name}\n`;
+    message += `• *CPF:* ${cpf}\n`;
+    message += `• *Endereço:* ${address}\n\n`;
+    
+    message += `*📦 ITENS DO PEDIDO:*\n`;
     
     let totalVal = 0;
-    
     window.animazCart.forEach((item, index) => {
         const isConsulte = item.price <= 0;
         const sub = isConsulte ? 0 : item.price * item.qty;
         totalVal += sub;
         
-        const sizeStr = item.size ? ` (Tam: ${item.size})` : '';
-        const priceStr = isConsulte ? 'Consulte' : formatPriceExp(sub);
+        const sizeStr = item.size ? ` (Tamanho: ${item.size})` : '';
+        const priceStr = isConsulte ? 'Consulte' : formatPriceExp(item.price);
+        const subtotalStr = isConsulte ? 'Consulte' : formatPriceExp(sub);
         
-        message += `${index + 1}. ${item.qty}x ${item.name}${sizeStr} - ${priceStr}\n`;
+        message += `• ${item.qty}x ${item.name}${sizeStr}\n`;
+        message += `  Valor Unit.: ${priceStr} | Subtotal: ${subtotalStr}\n`;
     });
     
-    message += `\n*TOTAL:* ${totalVal > 0 ? formatPriceExp(totalVal) : 'A Consultar'}\n\n`;
-    message += `Aguardando retorno para confirmar a disponibilidade e entrega.`;
+    message += `\n----------------------------------------\n`;
+    message += `*💰 TOTAL DO PEDIDO:* ${totalVal > 0 ? formatPriceExp(totalVal) : 'A Consultar'}\n`;
+    message += `----------------------------------------\n\n`;
+    
+    message += `*Informações do Pedido:*\n`;
+    message += `• Pedido Nº: ${orderNum}\n`;
+    message += `• Data/Hora: ${dateStr}\n\n`;
+    message += `_Pedido gerado via catálogo online._`;
     
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     
+    // Open WhatsApp
     window.open(whatsappUrl, '_blank');
+    
+    // Clear Form
+    document.getElementById('checkout-form').reset();
+    
+    // Close Modal and Drawer
+    window.closeCheckoutModal();
+    if (typeof window.closeCart === 'function') {
+        window.closeCart();
+    }
+    
+    // Clear Cart since order was placed
+    window.animazCart = [];
+    if (typeof saveCart === 'function') {
+        saveCart();
+    } else if (localStorage) {
+        localStorage.setItem('animaz_cart', JSON.stringify([]));
+        if (typeof renderCart === 'function') {
+            renderCart();
+        }
+        if (typeof updateCartBadge === 'function') {
+            updateCartBadge();
+        }
+    }
+    
+    if (typeof showToast === 'function') {
+        showToast('Pedido enviado ao WhatsApp com sucesso!');
+    }
 }
+
