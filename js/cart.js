@@ -45,6 +45,11 @@ window.cartAddToCart = function(product, qty, size) {
         price = product.sizesPricing[size];
     }
     
+    // Apply 10% promotional discount on all active prices (price > 0)
+    if (price > 0) {
+        price = price * 0.9;
+    }
+    
     if (existingIndex > -1) {
         window.animazCart[existingIndex].qty += qty;
     } else {

@@ -105,10 +105,7 @@ function renderProducts(productsToRender) {
             }
         }
         
-        let priceDisplay = formatPriceHTML(initialPrice);
-        if (isPriceFrom) {
-            priceDisplay = `<span class="price-from" style="font-size: 13px; font-weight: 500; color: #888; display: block; margin-bottom: 2px;">A partir de</span> ${priceDisplay}`;
-        }
+        let priceDisplay = formatPromoPriceHTML(initialPrice, isPriceFrom);
         
         // Sizes
         let sizesHTML = '';
@@ -268,6 +265,26 @@ function formatPriceHTML(price) {
     return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+// Helper: Formata Preço Promocional (De: / Por: 10% OFF)
+function formatPromoPriceHTML(price, isFrom) {
+    if (!price || price <= 0) return '<div class="price-promo consulte">Consulte</div>';
+    
+    const originalPriceStr = price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const discountedPriceStr = (price * 0.9).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    
+    if (isFrom) {
+        return `
+            <div class="price-original">De: <span>A partir de ${originalPriceStr}</span></div>
+            <div class="price-promo">Por: <span class="price-from-label" style="font-size: 13px; font-weight: 500; color: #888; display: inline; margin-right: 4px;">A partir de</span>${discountedPriceStr}</div>
+        `;
+    } else {
+        return `
+            <div class="price-original">De: <span>${originalPriceStr}</span></div>
+            <div class="price-promo">Por: ${discountedPriceStr}</div>
+        `;
+    }
+}
+
 // Helper: Destaca texto pesquisado
 function highlightText(text) {
     const query = window.animazState.searchQuery.trim();
@@ -295,7 +312,7 @@ function selectSize(element, productId, size) {
             if (product.sizesPricing && product.sizesPricing[size]) {
                 selectedPrice = product.sizesPricing[size];
             }
-            priceContainer.innerHTML = formatPriceHTML(selectedPrice);
+            priceContainer.innerHTML = formatPromoPriceHTML(selectedPrice, false);
         }
     }
 }
