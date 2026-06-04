@@ -14,6 +14,13 @@
 </head>
 <body>
 
+    <!-- ===== ANNOUNCEMENT BAR ===== -->
+    <div class="announcement-bar">
+        <span class="announcement-text">
+            Olá! 🇧🇷⚡ Vista seu pet para torcer pelo Brasil com o look completo! Leve a roupinha de Copa + coleira e guias e ganhe <strong>10% OFF no combo</strong> 🛍️💥
+        </span>
+    </div>
+
     <!-- ===== HEADER ===== -->
     <header class="site-header" id="main-header">
         <div class="header-inner">
@@ -56,12 +63,30 @@
 
             <div class="hero-carousel-wrapper">
                 <div id="banner-carousel">
-                    <img src="assets/banners/banner-banho.png" alt="Banho e Tosa" class="banner-slide active" loading="eager">
+                    <!-- Custom Split Promo Slide (Vertical Image + Marketing Copy) -->
+                    <div class="banner-slide banner-promo-slide active">
+                        <div class="banner-promo-container">
+                            <div class="banner-promo-text">
+                                <span class="banner-promo-tag">Olá! 🇧🇷⚡</span>
+                                <h3 class="banner-promo-title">Vista seu pet para torcer pelo Brasil com o look completo!</h3>
+                                <p class="banner-promo-desc">Leve a roupinha de Copa + coleira e guias e ganhe <strong>10% OFF no combo</strong> 🛍️💥</p>
+                                <div class="banner-promo-footer">
+                                    <span class="banner-promo-date">🗓️ Promoção de 01 a 10 de junho</span>
+                                    <span class="banner-promo-slogan">💛 Seu pet entra em campo com estilo de campeão da cabeça às patas! 💚💙</span>
+                                </div>
+                            </div>
+                            <div class="banner-promo-img-wrapper">
+                                <img src="assets/banners/banner-combo.png" alt="Combo Copa 10% OFF" class="banner-promo-img">
+                            </div>
+                        </div>
+                    </div>
+                    <img src="assets/banners/banner-banho.png" alt="Banho e Tosa" class="banner-slide" loading="eager">
                     <img src="assets/banners/banner-funcionamento.png" alt="Funcionamento" class="banner-slide" loading="eager">
                 </div>
                 <div class="carousel-dots" id="banner-dots">
                     <button class="dot active" data-index="0" aria-label="Banner 1"></button>
                     <button class="dot" data-index="1" aria-label="Banner 2"></button>
+                    <button class="dot" data-index="2" aria-label="Banner 3"></button>
                 </div>
             </div>
         </div>
@@ -91,6 +116,51 @@
         </div>
 
         <div class="products-section">
+            <!-- ===== PREMIUM COPA DETAIL SECTION ===== -->
+            <div class="promo-box campaign-details-card animate-in">
+                <div class="promo-box-header">
+                    <span class="promo-box-badge">🇧🇷⚡ REGULAMENTO DA CAMPANHA DE COPA</span>
+                    <span class="promo-box-date">🗓️ Válido de 01 a 10 de junho</span>
+                </div>
+                <div class="promo-box-content-grid">
+                    <div class="campaign-info-visual">
+                        <img src="assets/banners/banner-combo.png" alt="Look Completo Copa" class="campaign-visual-img">
+                    </div>
+                    <div class="campaign-info-text">
+                        <h3 class="campaign-headline">Leve o combo da copa e ganhe 10% OFF!</h3>
+                        <p class="campaign-paragraph">Vista seu pet para torcer pelo Brasil com o look completo de campeão! Comprando o combo promocional, você ganha <strong>10% de desconto adicional</strong> sobre o valor total do pedido.</p>
+                        
+                        <div class="campaign-steps">
+                            <div class="campaign-step-item">
+                                <span class="step-num">1</span>
+                                <div class="step-details">
+                                    <h4>Selecione a roupinha</h4>
+                                    <p>Escolha a roupinha oficial UV50+ Brasil (Azul ou Amarela) no tamanho adequado do seu pet.</p>
+                                </div>
+                            </div>
+                            <div class="campaign-step-item">
+                                <span class="step-num">2</span>
+                                <div class="step-details">
+                                    <h4>Adicione guia e coleira</h4>
+                                    <p>Combine com guias e coleiras oficiais da seleção brasileira para completar o visual.</p>
+                                </div>
+                            </div>
+                            <div class="campaign-step-item">
+                                <span class="step-num">3</span>
+                                <div class="step-details">
+                                    <h4>Ganhe 10% OFF no Combo</h4>
+                                    <p>O desconto promocional de 10% é aplicado diretamente no total do seu carrinho! 🛍️💥</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="campaign-footer-notice">
+                            <p>💚 <strong>Seu pet entra em campo com estilo de campeão da cabeça às patas!</strong> 💙 Válido para compras e delivery de 01 a 10 de junho.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="products-grid" id="products-grid">
                 <!-- Rendered via JS -->
             </div>
