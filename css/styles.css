@@ -322,12 +322,12 @@ ul, ol { list-style: none; }
 
 /* Hero Carousel */
 .hero-carousel-wrapper {
-    flex: 1.5;
+    flex: 1.8;
     position: relative;
     border-radius: var(--radius-2xl);
     overflow: hidden;
-    aspect-ratio: 1170 / 300; /* slightly taller for better image framing */
-    max-width: 840px;
+    aspect-ratio: 1170 / 390; /* 30% taller for better scale and visual impact */
+    max-width: 960px; /* larger width to match scale increase */
     border: 1px solid var(--border-glass);
     box-shadow: var(--shadow-glass), 0 20px 50px rgba(0,0,0,0.4);
     background: var(--bg-glass);
@@ -1695,7 +1695,7 @@ mark {
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 8px 30px;
+    padding: 16px 36px;
     pointer-events: auto;
     transition: background 0.5s ease;
 }
@@ -1705,7 +1705,7 @@ mark {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 32px;
     max-width: 950px;
     width: 100%;
     height: 100%;
@@ -1717,23 +1717,23 @@ mark {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 4px;
+    gap: 6px;
     text-align: left;
 }
 
 .banner-promo-header-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 .banner-promo-tag {
     font-family: 'Outfit', sans-serif;
-    font-size: 9px;
+    font-size: 10.5px;
     font-weight: 900;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: var(--radius-full);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -1741,9 +1741,9 @@ mark {
 
 .banner-promo-badge {
     font-family: 'Outfit', sans-serif;
-    font-size: 9px;
+    font-size: 10.5px;
     font-weight: 950;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 6px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1752,7 +1752,7 @@ mark {
 
 .banner-promo-title {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(16px, 3.2vw, 21px);
+    font-size: clamp(18px, 3.2vw, 26px);
     font-weight: 900;
     color: #fff;
     line-height: 1.15;
@@ -1760,59 +1760,59 @@ mark {
 }
 
 .banner-promo-subtitle {
-    font-size: 12.5px;
+    font-size: 14.5px;
     font-weight: 600;
     color: #e2e0ea;
     line-height: 1.3;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
 }
 
 .banner-promo-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin: 4px 0 6px 0;
+    gap: 6px;
+    margin: 6px 0 10px 0;
     padding-left: 0;
     list-style: none;
 }
 
 .banner-promo-list li {
-    font-size: 11.5px;
+    font-size: 13.5px;
     font-weight: 500;
     color: #ccc;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .banner-promo-list li span {
-    font-size: 13px;
+    font-size: 15px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
+    width: 22px;
 }
 
 .banner-promo-footer {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     align-items: flex-start;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .banner-promo-date {
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 800;
     color: #FFDF00;
     background: rgba(255, 223, 0, 0.1);
-    padding: 2px 6px;
+    padding: 3px 8px;
     border-radius: 4px;
     border: 1px solid rgba(255, 223, 0, 0.2);
 }
 
 .banner-promo-note {
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 700;
     color: #aaa;
     opacity: 0.85;
