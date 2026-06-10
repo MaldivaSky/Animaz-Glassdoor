@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
     setupHeroCarousel();
     setupSearch();
+    setupCategoriesScroll();
 });
 
 // ==========================================
@@ -447,6 +448,7 @@ function setupHeroCarousel() {
     const slides = document.querySelectorAll('.banner-slide');
     const dots = document.querySelectorAll('.dot');
     let currentSlide = 0;
+    let rotationInterval;
     
     if (slides.length === 0) return;
     
@@ -459,19 +461,39 @@ function setupHeroCarousel() {
         currentSlide = index;
     }
     
-    // Auto rotate
-    setInterval(() => {
-        let next = currentSlide + 1;
-        if (next >= slides.length) next = 0;
-        showSlide(next);
-    }, 5000);
+    function startAutoRotate() {
+        stopAutoRotate();
+        rotationInterval = setInterval(() => {
+            let next = currentSlide + 1;
+            if (next >= slides.length) next = 0;
+            showSlide(next);
+        }, 5000);
+    }
+    
+    function stopAutoRotate() {
+        if (rotationInterval) {
+            clearInterval(rotationInterval);
+        }
+    }
+    
+    // Start rotation
+    startAutoRotate();
     
     // Click dots
     dots.forEach(dot => {
         dot.addEventListener('click', () => {
             showSlide(parseInt(dot.dataset.index));
+            // Reset timer on manual action
+            startAutoRotate();
         });
     });
+    
+    // Pause on mouse hover for a better UX
+    const carouselWrapper = document.querySelector('.hero-carousel-wrapper');
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', stopAutoRotate);
+        carouselWrapper.addEventListener('mouseleave', startAutoRotate);
+    }
 }
 
 // ==========================================
@@ -495,6 +517,30 @@ function setupIntersectionObserver() {
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     
     cards.forEach(card => observer.observe(card));
+}
+
+// ==========================================
+// 6b. Ocultar Barra de Categorias no Scroll
+// ==========================================
+function setupCategoriesScroll() {
+    const categoriesBar = document.querySelector('.categories-bar');
+    if (!categoriesBar) return;
+    
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Se rolar para baixo e passar de 150px, oculta a barra
+        if (scrollTop > lastScrollTop && scrollTop > 150) {
+            categoriesBar.classList.add('hidden-scroll');
+        } else if (scrollTop < lastScrollTop) {
+            // Se rolar para cima, mostra a barra
+            categoriesBar.classList.remove('hidden-scroll');
+        }
+        
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }, { passive: true });
 }
 
 // ==========================================
