@@ -177,46 +177,53 @@
         </div>
 
         <div class="products-section">
-            <!-- ===== PREMIUM COPA DETAIL SECTION ===== -->
-            <div class="promo-box campaign-details-card animate-in">
-                <div class="promo-box-header">
-                    <span class="promo-box-badge">🇧🇷⚡ REGULAMENTO DA CAMPANHA DE COPA</span>
-                    <span class="promo-box-date">🗓️ Válido de 01 a 10 de junho</span>
-                </div>
-                <div class="promo-box-content-grid">
-                    <div class="campaign-info-visual">
-                        <img src="assets/banners/banner-combo.png" alt="Look Completo Copa" class="campaign-visual-img">
+            <!-- ===== PREMIUM COPA DETAIL SECTION (COLLAPSIBLE) ===== -->
+            <div class="promo-box campaign-details-card animate-in" id="campaign-regulations">
+                <button class="regulation-toggle-btn" onclick="toggleRegulations()" aria-expanded="false" aria-controls="regulation-content">
+                    <div class="toggle-title-area">
+                        <span class="promo-box-badge">🇧🇷⚡ REGULAMENTO</span>
+                        <h3 class="campaign-headline-compact">Combo da Copa: Monte o Look Completo e Ganhe 10% OFF!</h3>
                     </div>
-                    <div class="campaign-info-text">
-                        <h3 class="campaign-headline">Leve o combo da copa e ganhe 10% OFF!</h3>
-                        <p class="campaign-paragraph">Vista seu pet para torcer pelo Brasil com o look completo de campeão! Comprando o combo promocional, você ganha <strong>10% de desconto adicional</strong> sobre o valor total do pedido.</p>
-                        
-                        <div class="campaign-steps">
-                            <div class="campaign-step-item">
-                                <span class="step-num">1</span>
-                                <div class="step-details">
-                                    <h4>Selecione a roupinha</h4>
-                                    <p>Escolha a roupinha oficial UV50+ Brasil (Azul ou Amarela) no tamanho adequado do seu pet.</p>
-                                </div>
-                            </div>
-                            <div class="campaign-step-item">
-                                <span class="step-num">2</span>
-                                <div class="step-details">
-                                    <h4>Adicione guia e coleira</h4>
-                                    <p>Combine com guias e coleiras oficiais da seleção brasileira para completar o visual.</p>
-                                </div>
-                            </div>
-                            <div class="campaign-step-item">
-                                <span class="step-num">3</span>
-                                <div class="step-details">
-                                    <h4>Ganhe 10% OFF no Combo</h4>
-                                    <p>O desconto promocional de 10% é aplicado diretamente no total do seu carrinho! 🛍️💥</p>
-                                </div>
-                            </div>
+                    <div class="toggle-action-area">
+                        <span class="promo-box-date">🗓️ Válido de 01/06 a 20/06</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                </button>
+                <div class="regulation-content-collapsible" id="regulation-content">
+                    <div class="promo-box-content-grid">
+                        <div class="campaign-info-visual">
+                            <img src="assets/banners/banner-combo.png" alt="Look Completo Copa" class="campaign-visual-img">
                         </div>
+                        <div class="campaign-info-text">
+                            <p class="campaign-paragraph">Vista seu pet para torcer pelo Brasil com o look completo de campeão! Comprando o combo promocional, você ganha <strong>10% de desconto adicional</strong> sobre o valor total do pedido.</p>
+                            
+                            <div class="campaign-steps-horizontal">
+                                <div class="campaign-step-item-horizontal">
+                                    <span class="step-num">1</span>
+                                    <div class="step-details">
+                                        <h4>Selecione a roupinha</h4>
+                                        <p>Escolha a roupinha oficial UV50+ Brasil (Azul ou Amarela) no tamanho adequado do seu pet.</p>
+                                    </div>
+                                </div>
+                                <div class="campaign-step-item-horizontal">
+                                    <span class="step-num">2</span>
+                                    <div class="step-details">
+                                        <h4>Adicione guia e coleira</h4>
+                                        <p>Combine com guias e coleiras oficiais da seleção brasileira para completar o visual.</p>
+                                    </div>
+                                </div>
+                                <div class="campaign-step-item-horizontal">
+                                    <span class="step-num">3</span>
+                                    <div class="step-details">
+                                        <h4>Ganhe 10% OFF no Combo</h4>
+                                        <p>O desconto promocional de 10% é aplicado diretamente no total do seu carrinho! 🛍️💥</p>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="campaign-footer-notice">
-                            <p>💚 <strong>Seu pet entra em campo com estilo de campeão da cabeça às patas!</strong> 💙 Válido para compras e delivery de 01 a 10 de junho.</p>
+                            <div class="campaign-footer-notice">
+                                <p>💚 <strong>Seu pet entra em campo com estilo de campeão da cabeça às patas!</strong> 💙 Válido para compras e delivery de 01 a 20 de junho.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

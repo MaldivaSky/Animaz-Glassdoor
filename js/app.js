@@ -611,3 +611,13 @@ function updateLightboxView() {
         else t.classList.remove('active');
     });
 }
+
+window.toggleRegulations = function() {
+    const btn = document.querySelector('.regulation-toggle-btn');
+    const content = document.getElementById('regulation-content');
+    if (!content || !btn) return;
+    
+    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !isExpanded);
+    content.classList.toggle('active');
+};
