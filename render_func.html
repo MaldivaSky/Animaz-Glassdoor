@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Banner Funcionamento</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap');
+        
+        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Outfit', sans-serif;}
+        
+        .banner-func {
+            width: 1920px;
+            height: 450px;
+            background-image: url('file:///C:/Users/g010792832/.gemini/antigravity-ide/brain/a2b540f0-b671-4032-b3fc-ac917dd461ad/bg_funcionamento_animaz_1781399354935.png');
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 120px;
+            box-sizing: border-box;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 20%, rgba(26, 11, 46, 0.9) 45%, rgba(26, 11, 46, 1) 100%);
+            z-index: 1;
+        }
+
+        .func-left {
+            z-index: 2;
+            width: 700px;
+            margin-left: 250px;
+        }
+
+        .func-logo {
+            height: 55px;
+            margin-bottom: 25px;
+        }
+
+        .func-top-text {
+            color: #d1c8eb;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+        }
+
+        .func-main-text {
+            color: #fff;
+            font-size: 72px;
+            font-weight: 900;
+            margin: 0 0 25px 0;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+        .func-main-text span {
+            color: #B8E62E;
+        }
+
+        .func-wpp {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(184, 230, 46, 0.1);
+            padding: 12px 25px;
+            border-radius: 50px;
+            width: fit-content;
+            border: 1px solid rgba(184, 230, 46, 0.3);
+        }
+        
+        .func-wpp-text {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 800;
+        }
+        .func-wpp-text span {
+            color: #B8E62E;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .func-right {
+            z-index: 2;
+            display: flex;
+            gap: 30px;
+            background: rgba(255,255,255,0.04);
+            padding: 35px 50px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+            border-left: 3px solid #B8E62E;
+            padding-left: 20px;
+        }
+        
+        .unit-title {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .unit-time {
+            color: #b0a3d4;
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-func">
+        <div class="gradient-overlay"></div>
+        <div class="func-left">
+            <img src="file:///C:/Users/g010792832/Desktop/Animaz%20Glassdoor/assets/logo_transparent_wpf.png" class="func-logo">
+            <h3 class="func-top-text">PENSANDO NO SEU CONFORTO</h3>
+            <h2 class="func-main-text">Domingo a <span>Domingo</span></h2>
+            
+            <div class="func-wpp">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="#B8E62E"><path d="M12.031 0C5.385 0 .003 5.383.003 12.028c0 2.124.553 4.195 1.604 6.015L.004 24l6.105-1.601a11.96 11.96 0 005.922 1.57h.005c6.645 0 12.025-5.382 12.025-12.028S18.676 0 12.031 0zm0 21.968c-1.796 0-3.553-.483-5.093-1.396l-.365-.216-3.785.992.997-3.69-.237-.377A9.972 9.972 0 012.003 12.03c0-5.542 4.51-10.05 10.03-10.05 2.686 0 5.209 1.046 7.108 2.946s2.943 4.42 2.943 7.104c-.001 5.54-4.51 10.048-10.053 10.048zm5.51-7.533c-.302-.151-1.785-.88-2.062-.981-.277-.101-.48-.151-.681.151-.202.302-.782.981-.958 1.182-.176.202-.353.227-.655.076-1.378-.687-2.42-1.282-3.344-2.883-.176-.303.176-.279.475-.875.101-.202.05-.379-.025-.53-.076-.151-.681-1.642-.933-2.248-.245-.589-.495-.509-.681-.519-.176-.009-.378-.011-.58-.011-.202 0-.529.076-.806.378-.277.302-1.059 1.034-1.059 2.52 0 1.487 1.084 2.924 1.235 3.125.151.202 2.133 3.256 5.168 4.565 2.054.887 2.766.757 3.27.606.666-.2 1.785-.73 2.037-1.436.252-.706.252-1.31.176-1.436-.076-.126-.277-.202-.579-.353z"/></svg>
+                <div class="func-wpp-text">
+                    <span>+55 (92)</span> 98187-0014
+                </div>
+            </div>
+        </div>
+        
+        <div class="func-right">
+            <div class="unit">
+                <h4 class="unit-title">Parque 10</h4>
+                <p class="unit-time">08h às 22h</p>
+            </div>
+            <div class="unit">
+                <h4 class="unit-title">Compensa</h4>
+                <p class="unit-time">08h às 20h</p>
+            </div>
+            <div class="unit">
+                <h4 class="unit-title">Ponta Negra</h4>
+                <p class="unit-time">08h às 22h</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

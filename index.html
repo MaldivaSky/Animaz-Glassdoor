@@ -46,101 +46,49 @@
         </div>
     </header>
 
-    <!-- ===== HERO ===== -->
+
+    <!-- ===== HERO — Banner Profissional ===== -->
     <section class="hero" id="hero">
-        <div class="hero-inner">
-            <div class="hero-text">
-                <span class="hero-tag">🇧🇷 Edição Limitada</span>
-                <h1 class="hero-title">Moda WorldCup<br><span>Brasil</span></h1>
-                <p class="hero-desc">Vista o seu melhor amigo com o manto da seleção! Bandanas, coleiras e peitorais oficiais para torcer com muita garra e estilo.</p>
-                <a href="#vitrine" class="hero-cta">
-                    Comprar Agora
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                </a>
+        <div class="hero-carousel-wrapper" id="banner-carousel-wrap">
+
+            <!-- Slide 1: Copa + Pet -->
+            <div class="banner-slide slide-copa active">
+                <img src="assets/banners/banner-copa-wide.png" alt="Copa + Pet — 10% OFF" class="banner-img">
             </div>
 
-            <div class="hero-carousel-wrapper">
-                <div id="banner-carousel">
-                    <!-- Slide 1: Copa + Pet -->
-                    <div class="banner-slide banner-promo-slide active" data-campaign="copa">
-                        <div class="banner-promo-container">
-                            <div class="banner-promo-text">
-                                <div class="banner-promo-header-row">
-                                    <span class="banner-promo-tag tag-copa">Moda Pet · Prorrogada</span>
-                                    <span class="banner-promo-badge badge-copa">10% OFF</span>
-                                </div>
-                                <h3 class="banner-promo-title title-copa">Copa + Pet = Combinação Perfeita!</h3>
-                                <p class="banner-promo-subtitle">Vista seu melhor amigo para entrar na torcida com você</p>
-                                <p class="banner-promo-desc">Garanta looks temáticos oficiais da seleção brasileira com conforto e estilo. Válido para cães e gatos de todos os tamanhos!</p>
-                                <div class="banner-promo-footer">
-                                    <span class="banner-promo-date">🗓️ Campanha prorrogada — válida de 01/06 a 20/06</span>
-                                    <span class="banner-promo-note">10% OFF em toda a linha Copa · Enquanto durar o estoque</span>
-                                </div>
-                            </div>
-                            <div class="banner-promo-img-wrapper">
-                                <img src="assets/banners/banner-combo.png" alt="Copa + Pet" class="banner-promo-img">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 2: Arraial do Pet -->
-                    <div class="banner-slide banner-promo-slide" data-campaign="arraial">
-                        <div class="banner-promo-container">
-                            <div class="banner-promo-text">
-                                <div class="banner-promo-header-row">
-                                    <span class="banner-promo-tag tag-arraial">Nova Campanha · Moda Canina</span>
-                                    <span class="banner-promo-badge badge-arraial">10% OFF</span>
-                                </div>
-                                <h3 class="banner-promo-title title-arraial">Arraial do Pet!</h3>
-                                <p class="banner-promo-subtitle">Seu dog merece entrar na quadrilha junina 🎉</p>
-                                <p class="banner-promo-desc">Lindos vestidos e roupinhas caipiras temáticas chegaram na Animaz! Conforto e caimento perfeito.</p>
-                                <div class="banner-promo-footer">
-                                    <span class="banner-promo-date">🗓️ Válida de 01/06 a 30/06</span>
-                                    <span class="banner-promo-note">Estoque limitado — garanta já o visual junino!</span>
-                                </div>
-                            </div>
-                            <div class="banner-promo-img-wrapper">
-                                <img src="assets/banners/banner-arraial.png" alt="Arraial do Pet" class="banner-promo-img">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3: Frete Grátis -->
-                    <div class="banner-slide banner-promo-slide" data-campaign="frete">
-                        <div class="banner-promo-container">
-                            <div class="banner-promo-text">
-                                <div class="banner-promo-header-row">
-                                    <span class="banner-promo-tag tag-frete">Entrega · Sem custo</span>
-                                    <span class="banner-promo-badge badge-frete">FRETE GRÁTIS</span>
-                                </div>
-                                <h3 class="banner-promo-title title-frete">Frete Grátis!</h3>
-                                <p class="banner-promo-subtitle">Compras acima de R$ 250,00 com entrega completamente gratuita 🛍️</p>
-                                <p class="banner-promo-desc">Frete 100% gratuito sem condições ocultas. Aproveite para abastecer a ração de todas as marcas!</p>
-                                <div class="banner-promo-footer">
-                                    <span class="banner-promo-date">🗓️ Válida de 11/06 a 20/06</span>
-                                    <span class="banner-promo-note">Entrega rápida direto na sua porta</span>
-                                </div>
-                            </div>
-                            <div class="banner-promo-img-wrapper">
-                                <img src="assets/banners/banner-frete.png" alt="Frete Grátis" class="banner-promo-img">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 4: Banho e Tosa -->
-                    <img src="assets/banners/banner-banho.png" alt="Banho e Tosa" class="banner-slide banner-banho-slide" loading="lazy">
-
-                    <!-- Slide 5: Funcionamento -->
-                    <img src="assets/banners/banner-funcionamento.png" alt="Funcionamento" class="banner-slide banner-func-slide" loading="lazy">
-                </div>
-                <div class="carousel-dots" id="banner-dots">
-                    <button class="dot active" data-index="0" aria-label="Banner 1"></button>
-                    <button class="dot" data-index="1" aria-label="Banner 2"></button>
-                    <button class="dot" data-index="2" aria-label="Banner 3"></button>
-                    <button class="dot" data-index="3" aria-label="Banner 4"></button>
-                    <button class="dot" data-index="4" aria-label="Banner 5"></button>
-                </div>
+            <!-- Slide 2: Arraial do Pet -->
+            <div class="banner-slide slide-arraial">
+                <img src="assets/banners/banner-arraial-wide.png" alt="Arraial do Pet — Moda Junina" class="banner-img">
             </div>
+
+            <!-- Slide 3: Banho e Tosa -->
+            <div class="banner-slide slide-banho">
+                <img src="assets/banners/banner-banho.png" alt="Banho e Tosa" class="banner-img">
+            </div>
+
+            <!-- Slide 4: Funcionamento -->
+            <div class="banner-slide slide-func">
+                <img src="assets/banners/banner-funcionamento.png" alt="Horários Animaz" class="banner-img">
+            </div>
+
+
+
+            <!-- Setas de navegação -->
+            <button class="banner-nav-btn banner-nav-prev" onclick="slideBanner(-1)" aria-label="Banner anterior">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="banner-nav-btn banner-nav-next" onclick="slideBanner(1)" aria-label="Próximo banner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+
+            <!-- Dots -->
+            <div class="carousel-dots" id="banner-dots">
+                <button class="dot active" data-index="0" aria-label="Banner 1"></button>
+                <button class="dot" data-index="1" aria-label="Banner 2"></button>
+                <button class="dot" data-index="2" aria-label="Banner 3"></button>
+                <button class="dot" data-index="3" aria-label="Banner 4"></button>
+            </div>
+
         </div>
     </section>
 

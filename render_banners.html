@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Banners Animaz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        
+        body { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 50px; background: #000; font-family: 'Inter', sans-serif; align-items: center; justify-content: center; min-height: 100vh;}
+        
+        /* === BANNER ARRAIAL === */
+        .banner-arraial {
+            width: 1920px;
+            height: 450px;
+            background-color: #381559; /* Roxo vibrante junino */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .arraial-bg {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .arraial-content {
+            position: relative;
+            z-index: 2;
+            padding-left: 120px;
+            width: 1000px;
+        }
+
+        .arraial-logo {
+            width: 160px;
+            margin-bottom: 25px;
+        }
+
+        .arraial-tag {
+            background: #B8E62E; /* Verde marca */
+            color: #1a0b2e;
+            font-size: 20px;
+            font-weight: 900;
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .arraial-title {
+            font-size: 72px;
+            font-weight: 900;
+            color: #fff;
+            margin: 0 0 15px 0;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+        .arraial-title span {
+            color: #B8E62E;
+        }
+
+        .arraial-subtitle {
+            font-size: 28px;
+            color: #e2e0ea;
+            margin: 0 0 40px 0;
+            font-weight: 600;
+        }
+
+        .arraial-features {
+            display: flex;
+            gap: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            color: #fff;
+            font-weight: 800;
+        }
+        .feature-item svg {
+            color: #B8E62E;
+        }
+
+
+        /* === BANNER FUNCIONAMENTO === */
+        .banner-func {
+            width: 1920px;
+            height: 450px;
+            background-color: #1a0b2e; /* Roxo profundo marca */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 120px;
+            box-sizing: border-box;
+        }
+
+        .func-left {
+            z-index: 2;
+            width: 800px;
+        }
+
+        .func-logo {
+            width: 180px;
+            margin-bottom: 30px;
+        }
+
+        .func-top-text {
+            color: #B8E62E;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+        }
+
+        .func-main-text {
+            color: #fff;
+            font-size: 85px;
+            font-weight: 900;
+            margin: 0 0 30px 0;
+            line-height: 1;
+            letter-spacing: -3px;
+        }
+
+        .func-wpp {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .func-wpp-text {
+            color: #fff;
+            font-size: 42px;
+            font-weight: 900;
+        }
+        .func-wpp-text span {
+            color: #887aab;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .func-right {
+            z-index: 2;
+            display: flex;
+            gap: 40px;
+            background: rgba(255,255,255,0.03);
+            padding: 40px 60px;
+            border-radius: 30px;
+            border: 2px solid rgba(184, 230, 46, 0.3);
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .unit-title {
+            color: #B8E62E;
+            font-size: 26px;
+            font-weight: 900;
+            margin: 0 0 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .unit-time {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            padding-left: 36px;
+        }
+
+        /* Abstract shapes */
+        .shape1 { position: absolute; width: 600px; height: 600px; border-radius: 50%; border: 3px solid rgba(184, 230, 46, 0.1); top: -200px; left: -100px; }
+        .shape2 { position: absolute; width: 800px; height: 800px; border-radius: 50%; border: 2px solid rgba(158, 113, 255, 0.1); bottom: -400px; right: 200px; }
+        
+    </style>
+</head>
+<body>
+
+    <!-- BANNER ARRAIAL HTML -->
+    <div class="banner-arraial" id="banner-arraial">
+        <img src="file:///C:/Users/g010792832/Desktop/Animaz%20Glassdoor/assets/logo_transparent_wpf.png" class="arraial-logo" style="position:absolute; top: 50px; left: 120px; z-index: 10;">
+        <img src="file:///C:/Users/g010792832/.gemini/antigravity-ide/brain/a2b540f0-b671-4032-b3fc-ac917dd461ad/bg_arraial_animaz_brand_1781399019573.png" class="arraial-bg">
+        <div class="arraial-content">
+            <div style="height: 60px;"></div> <!-- Spacer for logo -->
+            <div class="arraial-tag">ESPECIAL DE ARRAIÁ</div>
+            <h2 class="arraial-title">Looks Caipiras <span>Exclusivos!</span></h2>
+            <p class="arraial-subtitle">Deixe seu pet pronto para a festança com qualidade premium.</p>
+            
+            <div class="arraial-features">
+                <div class="feature-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Conforto Absoluto
+                </div>
+                <div class="feature-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Estampas Temáticas
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BANNER FUNCIONAMENTO HTML -->
+    <div class="banner-func" id="banner-func">
+        <div class="shape1"></div>
+        <div class="shape2"></div>
+        <div class="func-left">
+            <img src="file:///C:/Users/g010792832/Desktop/Animaz%20Glassdoor/assets/logo_transparent_wpf.png" class="func-logo">
+            <h3 class="func-top-text">Pensando no seu conforto, funcionamos</h3>
+            <h2 class="func-main-text">de domingo a domingo</h2>
+            
+            <div class="func-wpp">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="#B8E62E"><path d="M12.031 0C5.385 0 .003 5.383.003 12.028c0 2.124.553 4.195 1.604 6.015L.004 24l6.105-1.601a11.96 11.96 0 005.922 1.57h.005c6.645 0 12.025-5.382 12.025-12.028S18.676 0 12.031 0zm0 21.968c-1.796 0-3.553-.483-5.093-1.396l-.365-.216-3.785.992.997-3.69-.237-.377A9.972 9.972 0 012.003 12.03c0-5.542 4.51-10.05 10.03-10.05 2.686 0 5.209 1.046 7.108 2.946s2.943 4.42 2.943 7.104c-.001 5.54-4.51 10.048-10.053 10.048zm5.51-7.533c-.302-.151-1.785-.88-2.062-.981-.277-.101-.48-.151-.681.151-.202.302-.782.981-.958 1.182-.176.202-.353.227-.655.076-1.378-.687-2.42-1.282-3.344-2.883-.176-.303.176-.279.475-.875.101-.202.05-.379-.025-.53-.076-.151-.681-1.642-.933-2.248-.245-.589-.495-.509-.681-.519-.176-.009-.378-.011-.58-.011-.202 0-.529.076-.806.378-.277.302-1.059 1.034-1.059 2.52 0 1.487 1.084 2.924 1.235 3.125.151.202 2.133 3.256 5.168 4.565 2.054.887 2.766.757 3.27.606.666-.2 1.785-.73 2.037-1.436.252-.706.252-1.31.176-1.436-.076-.126-.277-.202-.579-.353z"/></svg>
+                <div class="func-wpp-text">
+                    <span>+55 (92)</span> 98187-0014
+                </div>
+            </div>
+        </div>
+        
+        <div class="func-right">
+            <div class="unit">
+                <h4 class="unit-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Parque 10</h4>
+                <p class="unit-time">08h às 22h</p>
+            </div>
+            <div class="unit">
+                <h4 class="unit-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Compensa</h4>
+                <p class="unit-time">08h às 20h</p>
+            </div>
+            <div class="unit">
+                <h4 class="unit-title"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Ponta Negra</h4>
+                <p class="unit-time">08h às 22h</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

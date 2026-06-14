@@ -444,56 +444,61 @@ function applyFilters() {
 // ==========================================
 // 5. Hero Banner Carousel
 // ==========================================
+let _bannerSlides = [];
+let _bannerDots = [];
+let _currentBannerSlide = 0;
+let _bannerInterval = null;
+
+function showBannerSlide(index) {
+    if (_bannerSlides.length === 0) return;
+    if (index < 0) index = _bannerSlides.length - 1;
+    if (index >= _bannerSlides.length) index = 0;
+    
+    _bannerSlides.forEach(s => s.classList.remove('active'));
+    _bannerDots.forEach(d => d.classList.remove('active'));
+    
+    _bannerSlides[index].classList.add('active');
+    if (_bannerDots[index]) _bannerDots[index].classList.add('active');
+    _currentBannerSlide = index;
+}
+
+window.slideBanner = function(direction) {
+    showBannerSlide(_currentBannerSlide + direction);
+    startBannerAutoRotate(); // reinicia o timer
+};
+
+function startBannerAutoRotate() {
+    if (_bannerInterval) clearInterval(_bannerInterval);
+    _bannerInterval = setInterval(() => {
+        showBannerSlide(_currentBannerSlide + 1);
+    }, 6000);
+}
+
 function setupHeroCarousel() {
-    const slides = document.querySelectorAll('.banner-slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
-    let rotationInterval;
+    _bannerSlides = Array.from(document.querySelectorAll('.banner-slide'));
+    _bannerDots   = Array.from(document.querySelectorAll('.dot'));
     
-    if (slides.length === 0) return;
+    if (_bannerSlides.length === 0) return;
     
-    function showSlide(index) {
-        slides.forEach(s => s.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('active'));
-        
-        slides[index].classList.add('active');
-        if(dots[index]) dots[index].classList.add('active');
-        currentSlide = index;
-    }
-    
-    function startAutoRotate() {
-        stopAutoRotate();
-        rotationInterval = setInterval(() => {
-            let next = currentSlide + 1;
-            if (next >= slides.length) next = 0;
-            showSlide(next);
-        }, 5000);
-    }
-    
-    function stopAutoRotate() {
-        if (rotationInterval) {
-            clearInterval(rotationInterval);
-        }
-    }
-    
-    // Start rotation
-    startAutoRotate();
-    
-    // Click dots
-    dots.forEach(dot => {
+    // Click nos dots
+    _bannerDots.forEach(dot => {
         dot.addEventListener('click', () => {
-            showSlide(parseInt(dot.dataset.index));
-            // Reset timer on manual action
-            startAutoRotate();
+            showBannerSlide(parseInt(dot.dataset.index));
+            startBannerAutoRotate();
         });
     });
     
-    // Pause on mouse hover for a better UX
-    const carouselWrapper = document.querySelector('.hero-carousel-wrapper');
-    if (carouselWrapper) {
-        carouselWrapper.addEventListener('mouseenter', stopAutoRotate);
-        carouselWrapper.addEventListener('mouseleave', startAutoRotate);
+    // Pausa ao passar o mouse
+    const wrapper = document.querySelector('.hero-carousel-wrapper');
+    if (wrapper) {
+        wrapper.addEventListener('mouseenter', () => {
+            if (_bannerInterval) clearInterval(_bannerInterval);
+        });
+        wrapper.addEventListener('mouseleave', startBannerAutoRotate);
     }
+    
+    // Inicia rotação automática
+    startBannerAutoRotate();
 }
 
 // ==========================================

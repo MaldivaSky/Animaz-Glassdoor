@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Banner Arraial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap');
+        
+        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Outfit', sans-serif;}
+        
+        .banner-arraial {
+            width: 1920px;
+            height: 450px;
+            background-image: url('file:///C:/Users/g010792832/.gemini/antigravity-ide/brain/a2b540f0-b671-4032-b3fc-ac917dd461ad/bg_arraial_animaz_brand_1781399019573.png');
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(26, 11, 46, 1) 20%, rgba(26, 11, 46, 0.8) 50%, transparent 80%);
+            z-index: 1;
+        }
+
+        .arraial-content {
+            position: relative;
+            z-index: 2;
+            padding-left: 120px;
+            width: 900px;
+        }
+
+        .arraial-logo {
+            height: 55px;
+            margin-bottom: 25px;
+        }
+
+        .arraial-tag {
+            background: #B8E62E;
+            color: #1a0b2e;
+            font-size: 18px;
+            font-weight: 900;
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .arraial-title {
+            font-size: 78px;
+            font-weight: 900;
+            color: #fff;
+            margin: 0 0 15px 0;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+        .arraial-title span {
+            color: #B8E62E;
+        }
+
+        .arraial-subtitle {
+            font-size: 26px;
+            color: #e2e0ea;
+            margin: 0 0 35px 0;
+            font-weight: 400;
+        }
+
+        .arraial-features {
+            display: flex;
+            gap: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            color: #fff;
+            font-weight: 800;
+        }
+        .feature-item svg {
+            color: #B8E62E;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-arraial">
+        <div class="gradient-overlay"></div>
+        <div class="arraial-content">
+            <img src="file:///C:/Users/g010792832/Desktop/Animaz%20Glassdoor/assets/logo_transparent_wpf.png" class="arraial-logo">
+            <br>
+            <div class="arraial-tag">Coleção Junina Animaz</div>
+            <h2 class="arraial-title">Looks Caipiras <span>Exclusivos!</span></h2>
+            <p class="arraial-subtitle">A moda pet mais estilosa da cidade para a festança.</p>
+            
+            <div class="arraial-features">
+                <div class="feature-item">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Conforto Absoluto
+                </div>
+                <div class="feature-item">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Estampas Temáticas
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
