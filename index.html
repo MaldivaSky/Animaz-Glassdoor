@@ -58,7 +58,7 @@
 
             <!-- Slide 2: Arraial do Pet -->
             <div class="banner-slide slide-arraial">
-                <img src="assets/banners/banner-arraial-wide.png" alt="Arraial do Pet — Moda Junina" class="banner-img">
+                <img src="assets/banners/banner-arraial-novo.png" alt="Arraial do Pet — Moda Junina" class="banner-img">
             </div>
 
             <!-- Slide 3: Banho e Tosa -->
@@ -68,7 +68,7 @@
 
             <!-- Slide 4: Funcionamento -->
             <div class="banner-slide slide-func">
-                <img src="assets/banners/banner-funcionamento.png" alt="Horários Animaz" class="banner-img">
+                <img src="assets/banners/banner-funcionamento-novo.png" alt="Horários Animaz" class="banner-img">
             </div>
 
 
@@ -360,6 +360,15 @@
             </div>
         </div>
     </footer>
+
+    <!-- ===== LIGHTBOX MODAL PARA ZOOM ===== -->
+    <div id="lightbox" class="lightbox-modal">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</button>
+        <img class="lightbox-content" id="lightbox-image">
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</button>
+        <div id="lightbox-thumbnails" class="lightbox-thumbnails"></div>
+    </div>
 
     <!-- ===== SCRIPTS ===== -->
     <script src="data/products.js"></script>

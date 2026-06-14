@@ -626,3 +626,42 @@ window.toggleRegulations = function() {
     btn.setAttribute('aria-expanded', !isExpanded);
     content.classList.toggle('active');
 };
+
+// ==========================================
+// 8. Efeito de Zoom / Lupa no Lightbox
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const imgElement = document.getElementById('lightbox-image');
+    if (imgElement) {
+        // Efeito de lupa seguindo o mouse
+        imgElement.addEventListener('mousemove', function(e) {
+            if (!imgElement.classList.contains('zoomed')) return;
+            const rect = e.target.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            imgElement.style.transformOrigin = `${x}% ${y}%`;
+        });
+        
+        // Alternar zoom com o clique
+        imgElement.addEventListener('click', function(e) {
+            e.stopPropagation(); // Evitar fechar o lightbox
+            if (imgElement.classList.contains('zoomed')) {
+                imgElement.classList.remove('zoomed');
+                imgElement.style.transformOrigin = 'center center';
+            } else {
+                imgElement.classList.add('zoomed');
+                // Centralizar o zoom no ponto clicado
+                const rect = e.target.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                imgElement.style.transformOrigin = `${x}% ${y}%`;
+            }
+        });
+        
+        // Tirar o zoom ao sair com o mouse para evitar tela presa
+        imgElement.addEventListener('mouseleave', function() {
+            imgElement.classList.remove('zoomed');
+            imgElement.style.transformOrigin = 'center center';
+        });
+    }
+});
